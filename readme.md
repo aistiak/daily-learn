@@ -14,5 +14,5 @@
 - kubernetes
 - terraform 
 - express / nest  
-- design patterns 
+- design patterns , oop 
 - algo ds (DSA)
