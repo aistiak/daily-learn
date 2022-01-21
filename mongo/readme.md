@@ -63,4 +63,65 @@ Dates , integers , double , byte array etc
 
 - maximum mongodb document size is 16MB 
 - documents can have nesting up to 100 levels 
-- we cam perform regex search in mongo string data type
+- we cam perform regex search in mongo string data type 
+
+
+### ways to connect to database 
+
+todo
+
+### query database 
+
+lets assume we have a collection users
+
+find a users named david , it will return an array (an empty array if no match is found)
+```
+db.users.find({name : "david"})
+```
+we can add pretty to make the output more formatted 
+```
+db.users.find({name:"istiak"}).pretty()
+```
+to return the first matched record we can use `findOne` , will return object if found or null if not 
+```
+db.users.find({name:"istiak"}).findOne()
+```
+
+`find` returns a cursor which can be used to iterate the records 
+```
+const users = db.users.find({name : "istiak"})
+
+if(users.hasNext()){
+    console.log(user.next())
+}
+```
+hear next moves cursor to the next document and returns the current document , but if the cursor is at its end , it (`next`) will throw an error so to avoid this we ensure there is a next by calling `hasNext` , it returns `true` if there is a next `false` otherwise 
+
+
+all the lines below will return all the document in the collection 
+```
+db.users.find()
+db.users.find({})
+db.users.find({"non_existing_field":null})
+```
+> NB. a non existing field in mongo will always have a `null` value 
+
+for `findOne` it will return only the first document in the collection 
+```
+db.users.findOne()
+db.users.findOne({})
+db.users.findOne({"non_existing_field":null})
+```
+
+##### choosing which fields to show for output 
+in mongo queries can either include of exclude specific fields from query result , this is called __Projection__ , it is expressed as the second argument in `find` and `findOne` . a field can be explicitly included or excluded by setting it to 1 and 0 .
+
+say we want to find name ang age form users collection
+
+```
+db.users.find({},{name:1,age:1})
+```
+>NB. for projection when one filed in  included explicitly other fields are excluded by default , and when on field is excluded explicitly all other fields will be included  by default 
+
+#### finding distinct fields 
+
