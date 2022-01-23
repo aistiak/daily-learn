@@ -47,23 +47,23 @@ Dates , integers , double , byte array etc
 
 
 #### mongo db data types are 
-- String 
-- Number 
-- Object 
-- Array (with indexes)
-- ObjectId 
-- Boolean
-- Null 
-- Date 
-- TimeStamp
-- Binary data 
+1. Boolean
+2. String 
+3. Number 
+4. Object 
+5. Date 
+6. Array (with indexes)
+7. Null 
+8. ObjectId 
+9. TimeStamp
+10. Binary data 
 
 ### todo : need little detail about data types 
 #### some facts 
 
 - maximum mongodb document size is 16MB 
 - documents can have nesting up to 100 levels 
-- we cam perform regex search in mongo string data type 
+- we can perform regex search in mongo string data type 
 
 
 ### ways to connect to database 
@@ -84,7 +84,7 @@ db.users.find({name:"istiak"}).pretty()
 ```
 to return the first matched record we can use `findOne` , will return object if found or null if not 
 ```
-db.users.find({name:"istiak"}).findOne()
+db.users.findOne({name:"istiak"})
 ```
 
 `find` returns a cursor which can be used to iterate the records 
@@ -127,7 +127,7 @@ db.users.find({},{name:1,age:1})
 
 we can use distinct function for this 
 ```
-db.users.distinct(`name)
+db.users.distinct(`name`)
 ```
 gets all the distinct names from the users collection 
 
@@ -176,8 +176,7 @@ db.users.estimatedDocumentCount()
 | not | $not | `db.users.find({ $not : { age : { $gt : 5 } } } )` | 
 
 
-#### exx : find list of movies form movies collection where actor _Leonardo DiCaprio_ and director _Martin Scorsese_
-in Drama or Crime genres 
+#### exx : find list of movies form movies collection where actor _Leonardo DiCaprio_ and director _Martin Scorsese_ collaborate in Drama or Crime genres 
 
 ```
 # 1
@@ -200,3 +199,40 @@ db.movies.find({
 ```
 
 ### Regular expression 
+
+find movies with title that contain the word Opera 
+```
+db.movies.find({
+    "title" : {
+        "regex" : "opera"
+    }
+})
+```
+find movies with title that start with the word opera 
+```
+db.movies.find({
+    "title" : {
+        "regex" : "^opera"
+    }
+})
+```
+find movies with title that end with the word opera 
+```
+db.movies.find({
+    "title" : {
+        "regex" : "opera$"
+    }
+})
+```
+> NB. ^ is called the caret operator and $ is the dollar operator  
+
+__performing a case insensitive search__
+regex search is by default case insensitive , but when using regular expression pattern to specify options we can use `$options`
+
+```
+db.movies.find(
+    {"title" : 
+        {"$regex" : "Opera", $options: "i"}
+    }
+)
+```
