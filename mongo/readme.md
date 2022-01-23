@@ -123,5 +123,80 @@ db.users.find({},{name:1,age:1})
 ```
 >NB. for projection when one filed in  included explicitly other fields are excluded by default , and when on field is excluded explicitly all other fields will be included  by default 
 
-#### finding distinct fields 
+#### finding distinct fields `distinct`
 
+we can use distinct function for this 
+```
+db.users.distinct(`name)
+```
+gets all the distinct names from the users collection 
+
+we can also call distinct with a query condition
+```
+db.users.distinct('name',{
+    "age" : 20
+})
+```
+#### counting document `count`
+```
+db.users.count()
+// > 100 
+```
+without a query count will not physically count the documents it will just read the metadata 
+> NB. mongodb specification does guarantee that metadata count will always be accurate 
+
+`countDocuments` returns the physical count not metadata of documents , unlike count it always requires a query parameter 
+```
+db.users.countDocument({}) // all document count 
+db.users.countDocument({age : 20}) // conditional count 
+```
+`estimatedDocumentCount` returns document count by reading metadata (always) , and it does not accept any parameters 
+```
+db.users.estimatedDocumentCount() 
+``` 
+
+### Conditional Operators 
+| operation  | symbol  | example|
+|---|---|---|
+|equal to| $eq| `db.users.find({"age" : {$eq : 5} })` | 
+|not equal to| $ne| `db.users.find({"age" : {$ne : 5} })` | 
+|greater than| $gt| `db.users.find({"age" : {$gt : 5} })` | 
+|greater than or equal | $gte| `db.users.find({"age" : {$gte : 5} })` |
+|less than| $lt| `db.users.find({"age" : {$lt : 5} })` | 
+|less than or equal| $lte| `db.users.find({"age" : {$lte : 5} })` |  
+|in| $in | `db.users.find({ "age" : {$in:[5,10,15]} })` |
+|not in | $nin | `db.users.find({ "age" : {$in:[4,12,14]} })`|
+
+### logical operators 
+| operation | symbol | example |
+|---|---|---|
+| and | $and | `db.users.find({ $and : [ {age : 20} , {name : "istiak"} ] })` and is implicit in mongo so `db.users.find({age : 20 , name :"istiak"})` is same as above  |
+| or | $or | `db.users.find({ $or : [ {age : 20} , {name : "istiak"} ] })` | 
+| nor | $nor | `db.users.find({ $nor : [ {age : 20} , {name : "istiak"} ] })` returns documents that do not satisfy any of the given conditions| 
+| not | $not | `db.users.find({ $not : { age : { $gt : 5 } } } )` | 
+
+
+#### exx : find list of movies form movies collection where actor _Leonardo DiCaprio_ and director _Martin Scorsese_
+in Drama or Crime genres 
+
+```
+# 1
+db.movies.find({
+    "cast : "Leonardo DiCaprio" ,
+    "director" : "Martin Scorsese",
+    "$or" : [ {"genres" : "crime"} , {"genres":"drama"} ]
+})
+
+# 2 
+db.movies.find({
+   "cast : "Leonardo DiCaprio" ,
+   "director" : "Martin Scorsese",
+   "genres" : {
+       $in : ["crime","drama"]
+   }
+})
+
+
+```
+
+### Regular expression 
