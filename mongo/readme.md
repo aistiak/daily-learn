@@ -236,3 +236,92 @@ db.movies.find(
     }
 )
 ```
+
+### Query Array 
+
+the movies collection has a field named cast (type array) which contains list of the cast 
+now to find documents where  _Charles Chaplin_ is a cast 
+```
+db.movies.find({
+    "cast" : "Charles Chaplin"
+})
+// only the cast is projected in output 
+```
+now to find movies where _Charles Chaplin_ and _Edna Purviance_ were together 
+```
+db.movies.find({
+    $and : [
+        {"cast" : "Charles Chaplin"} ,
+        {"cast" : "Edna Purviance "}
+    ]
+})
+```
+
+##### search array with array 
+
+we can search array with array but in this case order will matter 
+
+```
+# 1
+
+db.movies.find({
+    "cast" : ["English","German"]
+})
+
+# 2 
+
+db.movies.find({
+    "cast" : ["German","English"]
+})
+
+// hear 1 and  2 will differ in output as it will match by order of output 
+
+```
+
+##### $all operator 
+
+`$all` finds all the documents irrespective of the provided order or size
+
+```
+ db.movies.find({
+     "languages" : {
+         $all : ["English","French"]
+     }
+ })
+
+```
+
+#### nested object search 
+
+nested object can be search in two ways 1. by object format 2. Dot notation format 
+
+in object format the whole object has to match 
+
+```
+db.movies.find({
+    "awards" : {
+        "wins" : 1 , "nominations" : 0 , "text" : "1 win."
+    }
+})
+
+// this approach will match the whole nested object 
+
+```
+dot notation search 
+
+```
+# 1
+
+db.movies.find({
+    "awards.wins" : 1
+})
+
+# 2 
+
+db.movies.find({
+    "awards.wins" : 1 ,
+    "awards.nominations" : 1 ,
+}) // implicit and condition on nested object 
+
+```
+> NB. nested object projection can also be done with dot notation 
