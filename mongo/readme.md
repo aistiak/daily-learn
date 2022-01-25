@@ -450,7 +450,11 @@ __middleware__
 
 __error handling__ 
 
+__frequently used functions__
+
 __doing it with typescript__ 
+
+
 ### todo 
 - insert , update 
 - array operations 
