@@ -325,3 +325,68 @@ db.movies.find({
 
 ```
 > NB. nested object projection can also be done with dot notation 
+
+#### limiting , skipping and sorting documents 
+
+__limit__ returns limited number of results , the function accepts an integer and 
+> _NB._ positive and negative numbers output the same result for limit() , but it is safe to use positive number as negative numbers cause problem with other functions such `sort` , and if the total result is less then the provided integer then all the data will be returned . 
+
+__ex__ 
+```
+db.movies.find().limit(10) 
+```
+
+> _NB._ Limit does not guarantee it will return the same result every time , we will have to use `sort` for that   
+
+__skip__ is used to exclude some documents from the result 
+```
+db.moves.find().skip(2) // skips the first two documents 
+```
+
+__sort__ is used to sort the documents 
+```
+// get movies list in sorted by title 
+db.movies.find().sort({title : 1}) // sorts in ascending order
+db.movies().find().sort({title : -1}) // sorts in descending order  
+```
+sorting can be performed in multiple fields and those fields can have different sorting order 
+__ex__
+```
+db.movies.find().sort({title : 1 , year : -1 })
+```
+### pagination 
+
+```
+     var findMoviesByGenre = function(genre, pageNumber, pageSize){
+          var toSkip = 0;
+          if(pageNumber < 2){
+              toSkip = 0;
+          } else{
+              toSkip = (pageNumber -1) * pageSize;
+          }
+          var movies = db.movies.find(
+              {"genres" : genre}, 
+              {"_id" : 0, "title" :1})
+          .sort({"imdb.rating" : -1})
+          .skip(toSkip)
+          .limit(pageSize)
+          .toArray()
+          print("************* Page : " + pageNumber)
+          for(var i =0; i < movies.length; i++){
+              print(movies[i].title)
+          }
+}
+```
+
+### todo 
+- insert , update 
+- array operations 
+- aggregation functions  
+- mongoose
+
+
+#### interview questions 
+##### ref 
+- https://www.interviewbit.com/mongodb-interview-questions/#mongodb-datatypes
+- https://www.guru99.com/mongodb-interview-questions.html
+- https://www.javatpoint.com/mongodb-interview-questions
