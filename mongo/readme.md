@@ -378,6 +378,79 @@ db.movies.find().sort({title : 1 , year : -1 })
 }
 ```
 
+
+
+## Mongoose 
+Is a ORM for mongodb . It lets us define schemas and work with models . Alongside properties schemas can also have behaviors  
+__database connection__
+
+ first thing we need to do is ensure database connection
+```
+const mongoose = require("mongoose")
+
+async function connect () {
+    await mongoose.connect("mongodb://localhost:27017/election-db)
+}
+connect().catch( error => console.log(error))
+``` 
+__define model and schema__
+```
+// define schema 
+const UserSchema = new mongoose.Schema({
+    name : String ;
+})
+
+// define model 
+const User = mongoose.model("User",UserSchema) 
+
+// create a new user 
+const user = new User({name : "istiak"})
+await user.save()
+
+// find user 
+await User.find({name : /^istiak/ })
+```
+__schema validation__
+
+types provided by mongoose are 
+1. String
+2. Number
+3. Date
+4. Buffer
+5. Boolean
+6. Mixed
+7. ObjectId
+8. Array
+9. Decimal128
+10. Map
+11. Schema 
+
+validations are defined in schema types 
+
+```
+const UserSchema = new mongoose.Schema({
+    name : {
+        type : String ,
+        required : true 
+    }
+})
+```
+all schema types are 
+1. required (boolean)
+2. default (any of function)
+3. select (boolean, specifies default projection for queries )
+4. validate (function)
+5. get (function , defines custom getters)
+6. set (function , defines custom setters)
+7. alias (string, defines a alias with get/set (virtual) )
+8. immutable (boolean)
+9. transform (function,called when toJSON or JSON.stringify document )
+
+__middleware__
+
+__error handling__ 
+
+__doing it with typescript__ 
 ### todo 
 - insert , update 
 - array operations 
