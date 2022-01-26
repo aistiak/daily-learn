@@ -447,12 +447,54 @@ all schema types are
 9. transform (function,called when toJSON or JSON.stringify document )
 
 __middleware__
+middleware in mongoose are also known as pre and post hooks, they are passed control during execution of asyn functions 
 
-__error handling__ 
+different types of middleware are 
+1. Document middleware 
+2. Model middleware 
+3. Aggregate middleware 
+4. Query middleware 
+
+__docs__  https://mongoosejs.com/docs/middleware.html
+
+__transaction__
+Transactions in mongodb allows us to execute multiple operations in isolation and undo potentially undo all if one of them fails 
+
+__ex__
+
+```
+import mongoose from 'mongoose'
+
+// using default connection
+const session = await mongoose.startSession() 
+
+await session.withTransaction(() =>{
+    // code hear 
+    // 
+})
+
+session.endSession() // all the changes will be committed 
+```
 
 __frequently used functions__
 
-__doing it with typescript__ 
+`find` ,`findOne` ,`update`, `updateOne`, `delete`, `deleteOne` 
+
+## Mongodb aggregation 
+__Ref__: https://docs.mongodb.com/manual/aggregation/
+
+aggregation operation processes multiple documents and returns a computed result 
+
+aggregation can be achieved by 
+- aggregation pipeline 
+- single purpose methods 
+- map-reduce functions  
+
+_aggregation pipelines_ may have single or multiple stages that perform various tasks 
+# todo 
+https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/#std-label-aggregation-pipeline-operator-reference 
+
+_single purpose functions_  are `count` , `estimatedCount` , `distinct` 
 
 
 ### todo 
