@@ -2,8 +2,11 @@
 - architecture
     - node js arch components  
     - client side js arch 
-- interview frequent questions 
 - when to use and when not to use node for a project 
+- jwt auth
+- oauth / oauth2  
+- TTD 
+- interview frequent questions 
 
 ### how is node different from other frameworks 
 first of all node is a runtime environment used to run js code in server side . 
@@ -35,5 +38,9 @@ components
 3. thread poll 
     - worker threads 
 
+__flow__ 
 
-an incoming request in sent to the event queue , event loop takes it from the queue and processes it if the request/event has async stuff in it event loop hand it over to the thread pool to run in background thread , when the work in background thread finishes the event is again added to the queue and from there again taken by the event loop to do the sync. stuff 
+- an incoming request in sent to the event queue , 
+- event loop takes it from the queue and processes it 
+- if the request/event has async stuff in it event loop hand it over to the thread pool to run in background thread ,
+- when the work in background thread finishes the event is again added to the queue and from there again taken by the event loop to do the sync. stuff 
