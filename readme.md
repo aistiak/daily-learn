@@ -16,3 +16,7 @@
 - express / nest  
 - design patterns , oop 
 - algo ds (DSA)
+
+
+
+# focus on `AWS` , `Mongo` , `SQL` , `Node` ,`Algo-DS` , `Design Patterns` , `JavaScript` , `GO` , `GIT` ,`System Design` , `Micro Services`

@@ -501,7 +501,6 @@ _single purpose functions_  are `count` , `estimatedCount` , `distinct`
 - insert , update 
 - array operations 
 - aggregation functions  
-- mongoose
 
 
 #### interview questions 
