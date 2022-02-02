@@ -381,7 +381,11 @@ db.movies.find().sort({title : 1 , year : -1 })
 
 
 ## Mongoose 
-Is a ORM for mongodb . It lets us define schemas and work with models . Alongside properties schemas can also have behaviors  
+Is a ODM ( Object Data Modeling ) library for mongodb . 
+- It lets us define schemas and work with models . Alongside properties schemas can also have behaviors  
+- manages relationship between data , provides schema validation 
+- translate object in to represent those object in mongodb 
+
 __database connection__
 
  first thing we need to do is ensure database connection
