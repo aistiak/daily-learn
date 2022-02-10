@@ -248,12 +248,205 @@ Now modern JS Engine has more optimization strategies
 
 ### let , var const difference 
 
-_hoisting_
-
 _scope_
 
+`var` is scoped to the immediate function body , let is scoped to the immediate enclosing block 
+
+```
+var funcs = [];
+// let's create 3 functions
+for (var i = 0; i < 3; i++) {
+  // and store them in funcs
+  funcs[i] = function() {
+    // each should log its value.
+    console.log("My value: " + i);
+  };
+}
+for (var j = 0; j < 3; j++) {
+  // and now let's run each one to see
+  funcs[j]();
+}
+
+// output 
+// My value: 3
+// My value: 3
+// My value: 3
+
+```
+the output is same because the anonymous function were bound to the same variable . 
+To avoid this immediately  invoked functions have to be used 
+
+```
+
+var funcs = [];
+    
+for (var i = 0; i < 3; i++) {
+    funcs[i] = (function(index) {
+        return function() {
+            console.log("My value: " + index);
+        };
+    }(i));
+}
+
+for (var j = 0; j < 3; j++) {
+    funcs[j]();
+}
+
+```
+
+_hoisting_
+
+`var` variables are hoisted and initialized with `undefined` so they can be referenced in scope before they are declared . 
+But `let` and `const`
+
+_creating global object property_
+
+At top level `var` creates properties on global object , but `let` does not do so .
+
 _redeclare_ 
+
+`var` can redeclare variable , but `let` and `const` with throw error 
 ### `this` is JS 
+__what is `this` keyword__ 
+
+this keyword refers to an object that is executing current piece of code , it references the object that is executing the current function 
+
+types of binding in JavaScript
+
+- Default binding 
+- Implicit binding 
+- Explicit binding 
+- Constructor call binding 
+
+_Default binding_
+
+A standalone function housing a `this` refers to the global object 
+
+```
+function alert() { 
+  console.log(this.name + ' is calling'); 
+}
+
+var name = 'Kingsley'; 
+
+alert(); // Kingsley is calling
+```
+
+_Implicit binding_
+
+If a function is attached to an object then `this` inside the function will refer to that object 
+
+```
+function alert() { 
+  console.log(this.age + ' years old'); 
+}
+
+const myObj = {
+  age: 22,
+  alert: alert
+}
+
+myObj.alert()
+
+// 22 years old
+
+```
+
+_Explicit binding_
+
+Explicit binding is when we want to force a function to use an object as its context 
+
+we have two methods to achieve this `call()` and `apply()`
+
+```
+
+function alert() { 
+  console.log(this.age + ' years old'); 
+}
+
+const myObj = {
+  age: 22
+}
+
+alert.call(myObj); // 22 years old
+
+```
+
+_Constructor call binding_ 
+
+A constructor call is when a function is called with new keyword 
+
+when a function is called with new keyword 
+- a brand new object is created or constructed 
+- the newly created object is prototype linked to the function that constructed it 
+- newly created object is set as this for that function call 
+
+```
+
+function giveAge(age) { 
+  this.age = age; 
+} 
+
+const bar = new giveAge(22); 
+console.log(bar.age); // 22
+
+```
+
+
+### `call` , `bind` , `apply` in JS 
+`call` and `apply` is used to invoke functions immediately , `bind` returns a bound function that executes later 
+
+___call___
+
+the first parameter of call is the this / context and following parameters are parameters to the function being called 
+
+```
+var obj = {name:"Istiak"};
+
+var greeting = function(a,b,c){
+    return "welcome "+this.name+" to "+a+" "+b+" in "+c;
+};
+
+console.log(greeting.call(obj,"Newtown","KOLKATA","WB"));
+
+```
+
+___apply___
+
+the first parameter of bind is this / context and second parameter is an array that contains the parameters of the function being called 
+
+```
+var obj = {name:"Istiak"};
+
+var greeting = function(a,b,c){
+    return "welcome "+this.name+" to "+a+" "+b+" in "+c;
+};
+
+console.log(greeting.apply(obj,["Newtown","KOLKATA","WB"]));
+
+```
+
+the only difference between `call` and `apply` is that `apply` takes function arguments as array 
+
+
+___bind___
+
+binds the function to an object to be invoked later 
+
+
+```
+
+var obj = {name:"Istiak"};
+
+var greeting = function(a,b,c){
+    return "welcome "+this.name+" to "+a+" "+b+" in "+c;
+};
+
+var fn = greeting.bind(obj));
+
+fn("Newtown","KOLKATA","WB")
+
+```
 
 ### regular function vs Lambda function js 
 
