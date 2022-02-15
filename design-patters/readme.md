@@ -74,3 +74,6 @@ subject.notify('are you there !')
 // fn1 received are you there ! 
 
 ```
+
+
+#### Decorator pattern 

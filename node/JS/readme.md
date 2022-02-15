@@ -3,6 +3,7 @@
 - data types 
 - hoisting 
 - let , var and const difference 
+- call , apply , bind functions 
 - Closure
 - promise / async await 
 - type coercion
@@ -10,7 +11,6 @@
 - iterator functions 
 - prototype chain in javascript 
 - object in javascript 
-- call , bind , apply
 - `this` in javascript  
 - explain browser side JS runtime arch. 
 - functional programming concepts 
@@ -19,6 +19,7 @@
 - what is the difference between regular function and lambda functions 
 - JS Engine workflow 
 - Garbage collection and Memory leak in JS engine 
+- what does lexical scope mean 
 ### Data types in JS 
 
 JavaScript is a _loosely type_ and _dynamic language_ . Variables in js are not particularly associated with any particular value type and any variable can be assigned or reassigned values of all types 
@@ -450,6 +451,160 @@ fn("Newtown","KOLKATA","WB")
 
 ### regular function vs Lambda function js 
 
+___this binding___
+
+arrow functions do not have there own `this` and `this` always refers to the context of the closest not arrow function 
+
+```
+function createObject() {
+  console.log('Inside CreateObject :' , this.foo)
+  return {
+    foo : 42 ,
+    bar : function () {
+      console.log('Inside bar : ', this.foo)
+    }
+  }
+}
+
+createObject.call({foo:21}).bar()
+
+// Inside `CreateObject` : , 21 
+// Inside `bar` : 42 
+
+```
+
+```
+function createObject() {
+  console.log('Inside CreateObject :' , this.foo)
+  return {
+    foo : 42 ,
+    bar :  () => {
+      console.log('Inside bar : ', this.foo)
+    }
+  }
+}
+
+createObject.call({foo:21}).bar()
+
+// Inside `CreateObject` : , 21 
+// Inside `bar` : 21  
+
+```
+
+___arguments binding___
+
+arguments objects are not available in arrow functions but are available in regular functions 
+
+```
+let fn = {
+  showArgs() {
+    console.log(arguments)
+  }
+}
+
+fn.showArgs(1,2,3)
+// will show the arguments object 
+```
+
+```
+let fn = {
+  showArgs : () => {
+    console.log(arguments)
+  }
+}
+
+fn.showArgs(1,2,3)
+
+// will throw an error 
+
+```
+
+___new keyword___
+
+arrow functions can not be called with new keyword 
+
+```
+let fn = () => {
+  console.log(`this is an arrow function `)
+}
+
+new fn() 
+
+// will throw an error 
+
+```
+
+___when not to use arrow functions___
+
+_object methods_ 
+
+```
+var cat = {
+  lives: 9,
+  jumps: () => {
+    this.lives--;
+  }
+}
+
+```
+hear cat.jumps wont do anything as arrow functions don't have any this binding , and this will refer to the nearest non arrow functions context 
+
+
+_callback functions with dynamic context_ 
+
+```
+var button = document.getElementById('press');
+button.addEventListener('click', () => {
+  this.classList.toggle('on');
+});
+
+```
+hear this was used to refer to the button , but this will not work as callback function being an arrow this will not refer to the button 
+
+_ideal for promises and promise chains_ 
+
+arrow functions are ideal for promise functions and chains , but will have to keep in mind how arrow functions work 
+
+
+### lexical scope in javascript 
+
+lexical scope means a variable declared outside a function can be accessed inside another function defined after the variable declaration , but opposite is not true 
+
+### Closure 
+
+- with closure scopes can have access to outer scopes where they were declared 
+- closure is when a function remembers its lexical scope even when the function is executed outside the lexical scope 
+
+```
+function foo() {
+  var bar = "bar";
+
+  function baz() {
+    console.log(bar);
+  }
+
+  bam(baz);
+}
+
+function bam(baz) {
+  baz();             // "bar"
+}
+
+foo();
+
+```
+
+```
+var foo = (function() {
+  var o = { foo: "bar" };
+
+  return { obj: o };
+})();
+
+// it's not closure, its just object reference!
+console.log(foo.obj.foo);
+
+```
 #### JS engine refs 
 - https://lzomedia.com/blog/modern-js-engine-workflow/
 - https://github.com/aistiak/MyDailyLearn/blob/master/javascript/js-foundation.md 
