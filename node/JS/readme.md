@@ -605,6 +605,159 @@ var foo = (function() {
 console.log(foo.obj.foo);
 
 ```
+- emulating private variable with closure 
+
+```
+function Counter(start) {
+  var count = start;
+  return {
+    increment: function() {
+      count++;
+    },
+    get: function() {
+      return count;
+    }
+  }
+}
+var foo = Counter(4);
+foo.increment();
+foo.get(); // 5
+
+```
+#### closure in loop
+##### problem-1 
+- closure inside loop , a tricky thing 
+
+```
+for(var i = 0; i < 10; i++) {
+  setTimeout(function() {
+    console.log(i);
+  }, 1000);
+}
+
+```
+- the code above will output 10 ten times 
+- the anonymous function keeps reference to i at the time `console.log` gets called , the for loop has already finished and the value of i has been set to 10 
+- in order to solve this we need to copy the value of i 
+
+```
+// 1. Avoiding the Reference Problem
+for(var i = 0; i < 10; i++) {
+  (function(e) {
+    setTimeout(function() {
+      console.log(e);
+    }, 1000)
+  })(i);
+}
+```
+- the anonymous function function gets called immediately with i as an argument and will receive  a copy of i  
+- now the anonymous function that gets passed to setTimeout will have a reference of e , whose value does not change while looping 
+
+```
+// 2. Avoiding the Reference Problem
+for(var i = 0; i < 10; i++) {
+  setTimeout((function(e) {
+    return function() {
+      console.log(e);
+    }
+    })(i), 1000)
+}
+```
+- this is another way of doing it 
+
+```
+// 4. Avoiding the Reference Problem
+for (let i = 0; i < 10; i++) {
+
+  // using the ES6 let syntax, it creates a new binding
+  // every single time the function is called
+  // read more: http://exploringjs.com/es6/ch_variables.html#sec_let-const-loop-heads
+
+  setTimeout(function() {
+    console.log(i);
+  }, 3000);
+}
+
+```
+- or we could just use `let` 
+
+```
+// 5. Avoiding the Reference Problem
+for(var i = 0; i < 10; i++) {
+  setTimeout(console.log.bind(console, i), 1000);
+}
+```
+- using `bind` to solve the problem 
+##### problem-2 
+
+```
+function assignTorpedo (name, passengerArray) {
+  var torpedoAssignment;
+  for (var i = 0; i < passengerArray.length; i++) {
+    if (passengerArray[i] == name {
+      torpedoAssignment = function () {
+        alert("Ahoy, " + name + "!\n" +
+        " Man your post at Torpedo # " + (i+1) + "!");
+      }
+    }
+  }
+  return torpedoAssignment;
+}
+
+var subPassengers = ["Luke", "Leia", "Han", "Chewie", "Yoda", "Boba"];
+var giveAssignment = assignTorpedo("Chewie", subPassengers);
+
+giveAssignment();   // it shows "... Torpedo #6!" instead of "... Torpedo #4!"
+
+```
+_solution-1_
+
+```
+// solutions #1:
+function assignTorpedo (name, passengerArray) {
+  for (var i = 0; i < passengerArray.length; i++) {
+    if (passengerArray[i] == name) {
+      return function () {                                // immediately return the function
+        alert("Ahoy, " + name + "!\n" +                   // so that i variable don't get the
+        " Man your post at Torpedo # " + (i+1) + "!");    // chance of increment
+      }
+    }
+  }
+}
+
+```
+
+_solution-2_
+
+```
+// solutions #2:
+function assignTorpedo (passengerArray) {
+  return function(name) {
+    for (var i = 0; i < passengerArray.length; i++) { // since we've put the loop inside the returned function,
+        if (passengerArray[i] == name) {              // i variable will come directly from that local scope
+          alert("Ahoy, " + name + "!\n" +
+          " Man your post at Torpedo # " + (i+1) + "!");   
+        }
+      }
+  }
+}
+
+var subPassengers = ["Luke", "Leia", "Han", "Chewie", "Yoda", "Boba"];
+var giveAssignment = assignTorpedo(subPassengers);
+giveAssignment("Chewie"); // 4
+
+```
+___What does Closure give us ?___
+
+Closure gives our functions persistent memories and entirely new toolkit for writing professional code:
+
+- __Helper Function:__ Everyday professional helper functions like once and memoize
+
+- __Iterators and generators:__ Which use lexical scoping and closure to achieve the most contemporary patterns for handling data in JavaScript
+
+- __Module Pattern:__ Preserve state for the life of and application without polluting the global namespace
+
+- __Asynchronous JavaScript:__ Callbacks and Promises rely on closure to persist state in an asynchronous environment
 #### JS engine refs 
 - https://lzomedia.com/blog/modern-js-engine-workflow/
 - https://github.com/aistiak/MyDailyLearn/blob/master/javascript/js-foundation.md 

@@ -23,7 +23,7 @@ some of the most used design patterns are
 
 
 
-### Observer 
+### Observer (Behavioral)
 
 Observer pattern is a subscription model where objects subscribe to an event and get notified when it occurs . This pattern is the corner of event driven programming including javascript . This pattern is also known as pub/sub or publish/subscribe pattern 
 
@@ -76,4 +76,5 @@ subject.notify('are you there !')
 ```
 
 
-#### Decorator pattern 
+#### Decorator pattern (Architectural) 
+
