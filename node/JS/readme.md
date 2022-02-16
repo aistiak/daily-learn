@@ -5,21 +5,25 @@
 - let , var and const difference 
 - call , apply , bind functions 
 - Closure
+- `this` in javascript  
+- what is the difference between regular function and lambda functions 
+- what does lexical scope mean 
+- functional programming concepts 
+- is JS object oriented or Functional programming language 
+
 - promise / async await 
+
 - type coercion
 - generator functions 
 - iterator functions 
 - prototype chain in javascript 
 - object in javascript 
-- `this` in javascript  
 - explain browser side JS runtime arch. 
-- functional programming concepts 
-- is JS object oriented or Functional programming language 
 - what is ES / ES5 / ES6 
-- what is the difference between regular function and lambda functions 
 - JS Engine workflow 
 - Garbage collection and Memory leak in JS engine 
-- what does lexical scope mean 
+- explain javascript event-loop
+- ways of creating object in javascript 
 ### Data types in JS 
 
 JavaScript is a _loosely type_ and _dynamic language_ . Variables in js are not particularly associated with any particular value type and any variable can be assigned or reassigned values of all types 
@@ -758,6 +762,142 @@ Closure gives our functions persistent memories and entirely new toolkit for wri
 - __Module Pattern:__ Preserve state for the life of and application without polluting the global namespace
 
 - __Asynchronous JavaScript:__ Callbacks and Promises rely on closure to persist state in an asynchronous environment
+
+
+### Promise , async ... await
+##### Synchronous and asynchronous javascript 
+
+_synchronous_ a system is synchronous when tasks are completed one after another 
+
+_asynchronous_ a system is asynchronous / async when task executions are independent 
+
+
+javascript has three ways of handling async stuff 
+- callbacks 
+- promises 
+- async / await 
+
+_callback_ 
+
+any function that is passed as an argument to another function so that it can be executed in that other function is called as a callback function 
+
+```
+function foo(call_bar) {
+  // do stuff 
+  call_bar()
+}
+
+function bar() {
+  console.log(`hello  there`)
+}
+
+foo(bar) // bar hear is a callback function to foo
+
+```
+
+__callback hell__ is when nesting many callbacks creates a messy situation 
+- what is node style callback 
+in nodejs callbacks are passed as the last parameter to a function  
+
+```
+
+getStuff("books",function(err,data){
+  if(!err){
+    console.log(data)
+  }
+})
+
+```
+
+_promise_
+- what is a promise 
+a promise is an object that may product a single value in future . either a resolved value or a reason for not being resolved 
+
+- basic syntax 
+
+  ```
+  function doStuff() {
+
+    return new Promise((resolve,reject) => {
+      callSomething(function(err,data)) {
+        if(!err){
+          resolve(data)
+        }
+        reject(err)
+      }
+    })
+  }
+
+  doStuff().then((response) => {
+    console.log(response)
+  }).catch((error) =>{
+    console.log(error)
+  })
+  ```
+
+- chain promises 
+  we can chain promises 
+  ```
+  doStuff()
+  .then( /* return a promise form hear*/)
+  .then( /* catch the returned promise , return a promise*/)
+  .then( /* catch the returned promise */)
+  .catch(error => { /* catch if any error occurs */ })
+  .finally(() => {  /* perform some final action */ })
+  ```
+
+- promisify callback in nodejs
+  The util.promisify() method basically takes a function as an input that follows the common Node.js callback style, i.e., with a (err, value) and returns a version of the same that returns a promise instead of a callback.
+
+  with regular callback 
+  ```
+  const fs = require('fs');
+
+  fs.readFile('./sample.txt', 'utf-8', (err, data) => {
+      if (err) {
+          // Handle error
+          console.error(err);
+            return;
+      }
+
+      // Data is string do something with it
+      console.log(data);
+  });
+
+  ```
+  with promisify 
+
+  ```
+  const fs = require('fs');
+  const util = require('util');
+
+  // Reading the file using a promise & printing its text
+  const readFile = util.promisify(fs.readFile);
+  readFile('./promisify.js', 'utf8') // Reading the same file
+    .then((text) => {
+        console.log(text);
+    })
+
+  // Printing error if any
+    .catch((err) => {
+        console.log('Error', err);
+    });
+
+  ```
+
+##### promise related functions 
+
+- promise.all()_
+
+- promise.any()_
+
+_async/await_
+- what is async await 
+- basic syntax 
+- async await compared to promise 
+- error handling 
+
+
 #### JS engine refs 
 - https://lzomedia.com/blog/modern-js-engine-workflow/
 - https://github.com/aistiak/MyDailyLearn/blob/master/javascript/js-foundation.md 

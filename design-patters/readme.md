@@ -78,3 +78,7 @@ subject.notify('are you there !')
 
 #### Decorator pattern (Architectural) 
 
+decorator is a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper object that contain the behavior 
+
+decorator is also called wrapper 
+
