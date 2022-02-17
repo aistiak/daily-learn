@@ -764,7 +764,7 @@ Closure gives our functions persistent memories and entirely new toolkit for wri
 - __Asynchronous JavaScript:__ Callbacks and Promises rely on closure to persist state in an asynchronous environment
 
 
-### Promise , async ... await
+### callback , Promise , async ... await
 ##### Synchronous and asynchronous javascript 
 
 _synchronous_ a system is synchronous when tasks are completed one after another 
@@ -889,14 +889,118 @@ a promise is an object that may product a single value in future . either a reso
 
 - promise.all()_
 
+  promise all takes a iterable of promises as input and returns a single promise that resolves to an array of all the results of the input promises . The returned promise will resolve when all of the input promises have resolved  
+
+  ```
+  const promise1 = Promise.resolve(3);
+  const promise2 = 42;
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 100, 'foo');
+  });
+
+  Promise.all([promise1, promise2, promise3]).then((values) => {
+    console.log(values);
+  });
+  // expected output: Array [3, 42, "foo"]
+
+
+  ```
+  the resulting promise is rejected if any of the input promises get rejected or throw error 
 - promise.any()_
+  
+  promise.any takes an iterable of promise objects . It returns a single promise that resolves as soon as any of the promises in the iterable fulfills , with the value of the fulfilled promise . 
 
-_async/await_
+  ```
+  const promise1 = Promise.reject(0);
+  const promise2 = new Promise((resolve) => setTimeout(resolve, 100, 'quick'));
+  const promise3 = new Promise((resolve) => setTimeout(resolve, 500, 'slow'));
+
+  const promises = [promise1, promise2, promise3];
+
+  Promise.any(promises).then((value) => console.log(value));
+
+  // expected output: "quick
+  ```
+  if no promise in the iterable is fulfilled then the returned promise is rejected 
+
+  - promise.allSettled()
+  the promise.allSettled() method returns a promise that resolved after all of the given promises have either fulfilled or rejected , with an array of object each describing the output of the promise 
+
+  ```
+  const promise1 = Promise.resolve(3);
+  const promise2 = new Promise((resolve, reject) => setTimeout(reject, 100, 'foo'));
+  const promises = [promise1, promise2];
+
+  Promise.allSettled(promises).
+    then((results) => results.forEach((result) => console.log(result.status)));
+
+  // expected output:
+  // "fulfilled"
+  // "rejected"  
+  ```
+##### async/await_
+
 - what is async await 
-- basic syntax 
-- async await compared to promise 
-- error handling 
 
+  The `async` and `await` keywords enable to write promise based code in a more readable / cleaner style , enabling to avoid promise chain  
+
+- basic syntax
+
+  ```
+  function resolveAfter2Seconds() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 2000);
+    });
+  }
+
+  async function asyncCall() {
+    console.log('calling');
+    const result = await resolveAfter2Seconds();
+    console.log(result);
+    // expected output: "resolved"
+  }
+
+  asyncCall();
+  ```
+
+- async await compared to promise 
+  writing a promise based function 
+  ```
+  function foo() {
+    return new Promise((resolve,reject) => {
+
+        // do stuff 
+
+    })
+  }
+  ```
+  now if we write the same function with async await 
+  ```
+
+  async function foo() {
+    // do stuff 
+  }
+
+  ```
+
+
+- error handling 
+  to handel error in async await we use `try` `catch`
+
+  ```
+  try {
+    
+    await foo()
+
+  }catch(error) {
+    
+    console.log(error)
+
+  }
+
+  ``` 
 
 #### JS engine refs 
 - https://lzomedia.com/blog/modern-js-engine-workflow/
