@@ -82,3 +82,86 @@ decorator is a structural design pattern that lets you attach new behaviors to o
 
 decorator is also called wrapper 
 
+__Actors__ 
+- BaseClass
+- Children of BaseClass (Extends BaseClass )
+- DecoratorClass (extend base class and has a BaseClass type field)
+- Children of Decorator class (Extends DecoratorClass)
+- children of decorator class will decorate the `BaseClass` children 
+
+__process__
+- there will be a `BaseClass` 
+- the direct children of base class are to be decorated 
+- Decorator Base  class will extend the base class with an extra field of type `BaseClass` 
+- the children of the BaseClass will be known as `decorators`
+
+
+![Diagram](https://64.media.tumblr.com/fc8b7569ab97cbb42b8dafa4a79c170c/f1b1b3c8b37d3b72-19/s1280x1920/85e138743d6d306bb50166d2c77e5773388d5c26.jpg)
+
+```
+/** Base class */
+class Pizza {
+    
+    constructor(price) {
+        this.price = price 
+    }
+    
+    cost() {
+        return this.price 
+    }
+}
+/** Base Children */
+class VeganPizza extends Pizza {
+   constructor() {
+    super(0)
+    this.price =  200 
+   }
+}
+
+class RegularPizza extends Pizza {
+    constructor(){
+        super(0)
+        this.price = 300 
+    }
+}
+/** decorator base  */
+class PizzaDecorator extends Pizza {
+    
+    constructor(pizza,price){
+        super(price)
+        this.pizza = pizza 
+    }   
+}
+/** decorators  */
+class ExtraOnion extends PizzaDecorator {
+    
+    constructor(pizza){
+        super(pizza,20)
+        this.pizza = pizza 
+    }
+    
+    cost() {
+        return this.price + this.pizza.cost()
+    }
+}
+
+class ExtraCrust extends PizzaDecorator {
+    
+    constructor(pizza){
+        super(pizza,50)
+        this.pizza = pizza 
+    }
+    
+    cost() {
+        return this.price + this.pizza.cost()
+    }
+}
+
+let pizza = new VeganPizza()
+
+/** decorating the pizza */
+pizza = new ExtraOnion(pizza)
+pizza = new ExtraCrust(pizza)
+
+console.log(pizza.cost())
+```

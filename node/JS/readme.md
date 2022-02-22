@@ -797,6 +797,7 @@ foo(bar) // bar hear is a callback function to foo
 
 __callback hell__ is when nesting many callbacks creates a messy situation 
 - what is node style callback 
+
 in nodejs callbacks are passed as the last parameter to a function  
 
 ```
@@ -810,7 +811,9 @@ getStuff("books",function(err,data){
 ```
 
 _promise_
+
 - what is a promise 
+
 a promise is an object that may product a single value in future . either a resolved value or a reason for not being resolved 
 
 - basic syntax 
@@ -887,7 +890,7 @@ a promise is an object that may product a single value in future . either a reso
 
 ##### promise related functions 
 
-- promise.all()_
+- _promise.all()_
 
   promise all takes a iterable of promises as input and returns a single promise that resolves to an array of all the results of the input promises . The returned promise will resolve when all of the input promises have resolved  
 
@@ -906,7 +909,7 @@ a promise is an object that may product a single value in future . either a reso
 
   ```
   the resulting promise is rejected if any of the input promises get rejected or throw error 
-- promise.any()_
+- _promise.any()_
   
   promise.any takes an iterable of promise objects . It returns a single promise that resolves as soon as any of the promises in the iterable fulfills , with the value of the fulfilled promise . 
 
@@ -923,7 +926,8 @@ a promise is an object that may product a single value in future . either a reso
   ```
   if no promise in the iterable is fulfilled then the returned promise is rejected 
 
-  - promise.allSettled()
+  - _promise.allSettled()_
+
   the promise.allSettled() method returns a promise that resolved after all of the given promises have either fulfilled or rejected , with an array of object each describing the output of the promise 
 
   ```
@@ -938,7 +942,7 @@ a promise is an object that may product a single value in future . either a reso
   // "fulfilled"
   // "rejected"  
   ```
-##### async/await_
+##### _async/await_
 
 - what is async await 
 
@@ -1001,6 +1005,171 @@ a promise is an object that may product a single value in future . either a reso
   }
 
   ``` 
+
+#### type coercion 
+
+- what is coercion is javascript 
+
+  _coercion_ is used for unexpected type casting in javascript .
+  a more formal definition would be "Type coercion is the automatic or implicit conversion of values from one data type to another " 
+
+  ```
+  14 + "" // "14"
+  ```
+  when we use `+` , `-` for adding or subtracting the values must be of the same type .
+  In the above example they are definitely not , hear 14 is converted into a string and then add them together 
+  > every `+` operation that involves a string will result in a string 
+
+  and for `-`
+
+  ```
+  "12" - 2 // 10 
+  "12" - 0 // 12 
+  "12" - "2" // 10
+  ``` 
+  as we can see subtracting can be used for number only 
+  > so for `-` JS will cast both values to numbers 
+
+  adding two arrays 
+  
+  ```
+
+  ["foo", "bar"] + ["alice", "bob"]   // "foo, baralice, bob"
+
+  ```
+
+  ``` 
+  [3] - [1] // 2 
+ 
+  ```
+
+- some classic example 
+
+
+### Generator functions and Iterators  
+- what is generator functions 
+
+  - The function keyword followed by a asterisk defines a generator function `function*` , which returns a Generator Object .
+ 
+
+  - A Generator Object confirms to both `iterable protocol` and `iterator protocol` 
+
+  - The `iterable protocol` allows javascript object to define or customize their iteration behavior , such as what values are looped over . Built in iterables with defined behavior are Array , Map , String etc 
+  
+  - To make an object iterable an object must have a property with `@@iterator` / `[Symbol.iterator]` key , and the value has to be a zero argument function that returns an object , the returned object must confirm to `iterator protocol`
+
+
+  - The `iterator protocol` define a standard way to product a sequence of values and potentially a return value when all values have been generated 
+
+  
+  - an object is an iterator when it implements a next() method will the following semantics 
+    - it can take zero or one argument , if next() is called with one argument then the argument will be available to the next() method 
+    - must return an object with done(boolean) , value (any) keys  
+  
+  
+  ```
+    // customizing a strings default iterator 
+
+    const name = "arif"
+    
+    var it = name[Symbol.iterator]() 
+    it.next() // {value : "a",done : false}
+
+    name.__proto__[Symbol.iterator] = function () {
+
+      return {
+        next : function () {
+          return {done : false , value : 'hello'}
+        }
+      }
+    }
+
+    var it = name[Symbol.iterator]() 
+    it.next() // {value : 'hello' , done : false }
+
+  ```
+ 
+- basic syntax
+  
+  ```
+    function* generator() {
+      yield 1 ;
+      yield 2 ;
+      yield 3 ;
+    }
+    const gen = generator() 
+    console.log(gen.next().value) // 1 
+    console.log(gen.next().value) // 2
+    console.log(gen.next().value) // 3 
+
+  ```
+  Generators are functions that can be exited and later re-entered . Their context will be saved across re-entrance
+
+  user defined iterable
+  
+  ```
+    const myIter = {} 
+    myIter[Symbol.iterator] = function*(){
+      yield 1 ;
+      yield 2 ;
+      yield 3 ;
+    }
+    console.log([...myIter]) // [ 1, 2, 3]
+  ```
+- a generator function does not execute immidiately it returns an iterable object 
+- when next() is called on the iterable object the function body executes until the next `yield` expression , which specifies
+  the value to be returned from the iterator 
+- `yield*` delegates to another iterator function 
+    ```
+    function* anotherGenerator(i) {
+      yield i + 1;
+      yield i + 2;
+      yield i + 3;
+    }
+
+    function* generator(i) {
+      yield i;
+      yield* anotherGenerator(i);
+      yield i + 10;
+    }
+
+    var gen = generator(10);
+
+    console.log(gen.next().value); // 10
+    console.log(gen.next().value); // 11
+    console.log(gen.next().value); // 12
+    console.log(gen.next().value); // 13
+    console.log(gen.next().value); // 20
+```
+- `return` statement will make the generator finish and make done true  
+
+- passing argument to next will replace `yield` with that argument 
+  ```
+  function* logGenerator() {
+    console.log(0);
+    console.log(1, yield);
+    console.log(2, yield);
+    console.log(3, yield);
+  }
+
+  var gen = logGenerator();
+
+  // the first call of next executes from the start of the function
+  // until the first yield statement
+  gen.next();             // 0
+  gen.next('pretzel');    // 1 pretzel
+  gen.next('california'); // 2 california
+  gen.next('mayonnaise'); // 3 mayonnaise
+  ```
+
+- generators can not be constructed 
+
+
+### prototype chaining 
+
+
+### over view of JS built in Objects 
+
 
 #### JS engine refs 
 - https://lzomedia.com/blog/modern-js-engine-workflow/
