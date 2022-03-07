@@ -18,8 +18,8 @@
 ### how does it work 
 
 - IAM has  key concepts 
-    - Users  (specific individuals , can receive personal logins )
-    - Groups ()
+    - Users 
+    - Groups 
     - Roles 
     - Policies / Permissions 
 
@@ -48,7 +48,7 @@
     }
     ```
 - Best practices are 
-    - use least privilege model (dont allow )
+    - use least privilege model (don't allow )
     - exercise caution when modifying policies , as it might cause problem / bug for applications that were already using it 
 
 

@@ -46,6 +46,15 @@
 3. __Topic:__ the topic exchange does a wildcard match between the routing key and the pattern specified in the binding 
 4. __Headers:__ Headers exchanges use the message header attribute for routing 
 
-
+### running RabbitMQ in docker 
+- docker run -d --hostname my-rabbit --name some-rabbit  -p 15672:15672 -p 5672:5672 rabbitmq:3-management 
+- docker run -d --hostname my-rabbit --name some-rabbit -e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password -e RABBITMQ_DEFAULT_VHOST=my_vhost -p 15672:15672 -p 5673:5673 rabbitmq:3-management 
+- docker exec -it <container-name> bash (/bin/bash) 
+    - rabbitmq-plugins enable rabbitmq_delayed_message_exchange
 ### Simple Pub-Sub 
 - https://www.cloudamqp.com/blog/part2-2-rabbitmq-for-beginners_example-and-sample-code-node-js.html
+- https://geshan.com.np/blog/2021/07/rabbitmq-docker-nodejs/
+
+### Delay Message 
+- https://blog.rabbitmq.com/posts/2015/04/scheduling-messages-with-rabbitmq
+- for delayed queue most of have to define exchange 
