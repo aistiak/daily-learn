@@ -27,8 +27,8 @@ var amqp = require('amqplib/callback_api');
 
 
 const amqplib = require('amqplib');
-// const amqpUrl = process.env.AMQP_URL || 'amqp://localhost:5672';
-const amqpUrl =  'amqp://52.221.254.141:5672';
+const amqpUrl = process.env.AMQP_URL || 'amqp://localhost:5672';
+// const amqpUrl =  'amqp://52.221.254.141:5672';
 
 async function processMessage(msg) {
   console.log(msg.content.toString(), 'Call email API here');

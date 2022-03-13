@@ -1120,7 +1120,8 @@ a promise is an object that may product a single value in future . either a reso
 - when next() is called on the iterable object the function body executes until the next `yield` expression , which specifies
   the value to be returned from the iterator 
 - `yield*` delegates to another iterator function 
-    ```
+
+  ```
     function* anotherGenerator(i) {
       yield i + 1;
       yield i + 2;
@@ -1140,10 +1141,13 @@ a promise is an object that may product a single value in future . either a reso
     console.log(gen.next().value); // 12
     console.log(gen.next().value); // 13
     console.log(gen.next().value); // 20
-```
+    
+
+
 - `return` statement will make the generator finish and make done true  
 
 - passing argument to next will replace `yield` with that argument 
+
   ```
   function* logGenerator() {
     console.log(0);
@@ -1160,17 +1164,82 @@ a promise is an object that may product a single value in future . either a reso
   gen.next('pretzel');    // 1 pretzel
   gen.next('california'); // 2 california
   gen.next('mayonnaise'); // 3 mayonnaise
+
   ```
 
 - generators can not be constructed 
 
 
 ### prototype chaining 
+- JavaScript is a bit confusing for developers experienced in class-based languages (like Java or C++), as it is dynamic and does not provide a class implementation per se (the class keyword is introduced in ES2015, but is syntactical sugar, JavaScript remains prototype-based).
+- constructor call makes an object , linked to its prototype 
+- constructor call is a function with new keyword 
+
+#### __proto__ , [[prototype]] and prototype 
+
+- `__proto__` gives direct access to an objects prototype , __proto__ setter allows [[prototype]] to be mutated 
+- `prototype` is the object that is used to build __proto__ when a function is called with new keyword 
+- [[prototype]] is object specified its prototype as an internal property 
+
+- `prototype` is not available on the instance itself but only in the constructor functions 
+- `prototype` is only available on functions since they are copied form `functions` and `object` to create __proto__ 
+- `__proto__` is available everywhere 
+- a method declared directly to function will be considered a static method , meaning it wont be available in the instance but only in the function itself 
+
+  ```
+    function A() {
+      function someMethod () {
+        console.log(`hello`)
+      }
+    }
+
+    const ob = new A() 
+    ob.someMethod() // TypeError 
+  ```
 
 
+- when a property is not found in an object it looks up in the __proto__ , if also not available there then the upper level __proto__ and this continues until __proto__ is `null` 
+- `hasOwnProperty` check if an object has a property not on its __proto__ 
 ### over view of JS built in Objects 
 
+## OLOO 
 
+todo 
+
+## Event loop
+- components 
+- describe the whole process 
+- diagram 
+- process.nextTick 
+
+### components 
+
+- task/event queue 
+- call stack 
+- heap 
+- node-api / web api 
+- thread pool 
+- event loop 
+
+#### process 
+- request comes and gets queued up in the event queue 
+- event loop takes event from the queue and places in the call stack 
+- call stack processes the code / event 
+- if memory is required it is allocated dynamically from the heap 
+- if task is cup bound then it is executed blocking the main thread and response is returned 
+- if task is I/O bound the event is send to web api in client side and node api in server side 
+- the web-api maps the task to a thread from the thread pool 
+- when the task finished it is then again put back in the event queue 
+- event loop again picks it up from the queue and places in the stack 
+
+### Diagram 
+
+![](https://i.imgur.com/fgyQROJ.png)
+
+### process.nextTick() 
+> process. nextTick puts a callback into a queue. Every callback in this queue will get executed at the very beginning of the next tick of the event loop. It's basically used as a way to clear your call stack
+
+> When in Node JS, one iteration of the event loop is completed. This is known as a tick. process. nextTick() taking a callback function which is executed after completing the current iteration/tick of the event loop
 #### JS engine refs 
 - https://lzomedia.com/blog/modern-js-engine-workflow/
 - https://github.com/aistiak/MyDailyLearn/blob/master/javascript/js-foundation.md 
