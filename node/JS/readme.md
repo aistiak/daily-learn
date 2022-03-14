@@ -18,12 +18,12 @@
 - iterator functions 
 - prototype chain in javascript 
 - object in javascript 
-- explain browser side JS runtime arch. 
+- explain browser side JS runtime arch. (event loop)
+- explain javascript event-loop
 - what is ES / ES5 / ES6 
 - JS Engine workflow 
-- Garbage collection and Memory leak in JS engine 
-- explain javascript event-loop
-- ways of creating object in javascript 
+- Garbage collection and Memory leak in JS engine *
+- ways of creating object in javascript *
 ### Data types in JS 
 
 JavaScript is a _loosely type_ and _dynamic language_ . Variables in js are not particularly associated with any particular value type and any variable can be assigned or reassigned values of all types 
