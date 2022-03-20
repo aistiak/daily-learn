@@ -14,14 +14,14 @@
 - advance git commands
     - branch
     - checkout 
-    - reset 
+    - reset *
     - merge 
     - config 
     - rebase 
     - revert 
     - diff
     - apply 
-    - cherry pick 
+    - cherry pick *
     - bisect 
     - blame 
     - grep 
@@ -61,10 +61,63 @@ But if you want to keen the files , you can use a temporary branch
 ### what is git reset 
 git reset is a complex and versatile command for undoing changes 
 
-- three type of trees 
+to understand `git reset` we need to understand some concepts first 
 - two type of refs 
+- three trees of git
+- 3 types of reset (mixed,soft,hard) 
+
+there are two refs in git main ref and head ref . main ref always points to the latest commit in a branch , and head ref points to the current commit the user is in or checked out . When main and head ref is different then we call it a detached head state 
+
+there are three trees is git system , `git reset` command manipulates therese trees  
+- _working directory_ is synced with local file system  
+- _index tree_  tracks working directory changes of files that have been added to the staging area with `git add` command 
+- _commit tree_ is the commit history 
+
+
+by default `git reset` is of type `mixed` (gir reset --mixed / git reset)  
+
+__`git reset --hard`__
+
+updated all the three trees , it changes the commit tree to a certain commit then modifies the index tree and file tree to match the commit 
+
+__`git reset --mixed`__
+
+changes the commit tree and index tree , and any changes of files that have be undone by index tree are moved to the working directory 
+
+__`git reset --soft`__
+
+only effects the commit tree , the index and file tree are untouched 
+
+
 
 ref : 
 https://www.atlassian.com/git/tutorials/undoing-changes/git-reset 
 
-### what is git cherry-pick 
+
+
+### what is `git cherry-pick `
+
+- it enables git commits to be picked by reference and appended to the current working head 
+- lets we have a git tree like this 
+    ```
+    a - b - c - d   Main
+            \
+            e - f - g Feature
+    ```
+- we can use cherry pick to pick any commit from feat. branch to append to main 
+    ```
+    git checkout main 
+    git cherry-pick <sha-of-f-commit>
+    ```
+- now the tree will look like this 
+    ```
+    a - b - c - d - f   Main
+            \
+            e - f - g Feature
+    ```
+
+### rebase 
+
+### bisect 
+
+### blame 

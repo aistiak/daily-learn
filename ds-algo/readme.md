@@ -1,0 +1,4 @@
+- list algos 
+- list ds 
+- divide in 3 categories ( warm ups / intermediate / advanced )
+- first focus will to clear warm up and get involved with intermediate stuff , to start giving interview 

@@ -20,5 +20,19 @@
 - terraform 
 
 
+### focusing on 
 
-# focus on `AWS` , `Mongo` , `SQL` , `Node` ,`Algo-DS` , `Design Patterns` , `JavaScript` , `GO` , `GIT` ,`System Design` , `Micro Services`
+#### top 5 
+
+- node / js
+- algo / ds 
+- design patterns 
+- database (mongo /sql)
+- system design 
+
+### top 10
+- git 
+- docker 
+- linux 
+- kubernetes 
+- aws 
