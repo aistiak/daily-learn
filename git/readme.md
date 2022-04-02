@@ -120,4 +120,7 @@ https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
 
 ### bisect 
 
+### log 
+
+
 ### blame 
