@@ -118,14 +118,28 @@ https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
 
 ### rebase 
 
+- git rebase allows us to write commits form one branch to another branch 
+- it helps keep the history clean 
+
+__rabaase vs merge__
+
 git rebase visual 
-![git rebase visual](https://raw.githubusercontent.com/aistiak/daily-learn/main/media-files/git/git-rebase-visual.gif)
+![](https://raw.githubusercontent.com/aistiak/daily-learn/main/media-files/git/git-rebase-visual.gif)
 
 git merge visual 
-![git merge visual](https://raw.githubusercontent.com/aistiak/daily-learn/main/media-files/git/git-merge-visual.gif)
+![](https://raw.githubusercontent.com/aistiak/daily-learn/main/media-files/git/git-merge-visual.gif)
+
 ### bisect 
+- uses binary search algorithm to find which commit in your project's history introduces a bug 
+
+refs 
+- https://stackoverflow.com/questions/4713088/how-to-use-git-bisect
 
 ### log 
 
 
 ### blame 
+
+- this command is used to examin the contents of a file line by line and see when each line was last modified and who the aithor of the modification was 
+
+- 
