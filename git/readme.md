@@ -118,6 +118,11 @@ https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
 
 ### rebase 
 
+git rebase visual 
+![git rebase visual](https://raw.githubusercontent.com/aistiak/daily-learn/main/media-files/git/git-rebase-visual.gif)
+
+git merge visual 
+![git merge visual](https://raw.githubusercontent.com/aistiak/daily-learn/main/media-files/git/git-merge-visual.gif)
 ### bisect 
 
 ### log 
