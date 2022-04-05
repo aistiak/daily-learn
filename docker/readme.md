@@ -34,3 +34,21 @@ container
 
 Refs :
 - https://codefresh.io/docker-tutorial/build-docker-image-dockerfiles/ 
+
+### managing docker containers 
+
+```
+docker run -d -p 8082:80 --ip 127.0.0.1 --hostname demo.com --name nginx-local nginx 
+```
+
+hear a nginx container is created if nginx image is not avaiable locally then it would be downloaded first 
+- `-d` rund the container id detached mode 
+- `-p` maps post external to container internal 
+- `--ip` specifies the ip in the host machine 
+- `--hostname` specifies hostname inside the container 
+- `--name` gives the container a custom name , otherwise a random name will be given 
+
+```
+docker logs --follow nginx-local 
+```
+this will log the logs inside the container and follow them 
