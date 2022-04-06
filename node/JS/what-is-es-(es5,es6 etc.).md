@@ -25,5 +25,7 @@
 - es1 (1997) was first release
 - es3 added regular expression , try-catch,switch , do-while , 
 - es4 was never released 
-- ECMAScript 2015 is knows as es6
+- ECMAScript 2015 is knows as es6 
+- es6 introduces module system (nodejs uses commonjs module system)
+
 
