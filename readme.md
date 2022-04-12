@@ -24,11 +24,11 @@
 
 #### top 5 
 
-- node / js
-- algo / ds 
-- design patterns 
+- node / js / express 
 - database (mongo /sql)
+- algo / ds 
 - system design 
+- design patterns / testing  
 
 ### top 10
 - git 
