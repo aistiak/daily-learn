@@ -7,6 +7,10 @@
 - oauth / oauth2  
 - TTD 
 - interview frequent questions 
+- nodejs dependencies 
+- what is libuv 
+- nodejs core modules ( http, crypto) 
+- node version difference ( 14 ,16 ,17 )
 
 ### how is node different from other frameworks 
 first of all node is a runtime environment used to run js code in server side . 
