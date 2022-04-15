@@ -9,7 +9,8 @@
 - interview frequent questions 
 - nodejs dependencies 
 - what is libuv 
-- nodejs core modules ( http, crypto) 
+- nodejs core modules ( http, crypto etc.) 
+- cluster module for scaling 
 - node version difference ( 14 ,16 ,17 )
 
 ### how is node different from other frameworks 
