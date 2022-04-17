@@ -7,7 +7,12 @@
 - oauth / oauth2  
 - TTD 
 - interview frequent questions 
-- nodejs core components ( libhub , v8)
+- nodejs dependencies 
+- what is libuv 
+- nodejs core modules ( http, crypto etc.) 
+- cluster module for scaling 
+- node version difference ( 14 ,16 ,17 )
+
 ### how is node different from other frameworks 
 first of all node is a runtime environment used to run js code in server side . 
 nodejs does all the sync stuff in a single thread and passes async stuff to background karnel thread , so it can take on many incoming request at once on a single thread (main thread) . 
