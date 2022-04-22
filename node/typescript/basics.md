@@ -9,7 +9,7 @@
 
 
 ## ts-basic 
-- typescript provides all the features of javascript with additioal layers on top of it ( type checking , attribute hinting / suggestion /inferred types , hinting errors before they occure)
+- typescript provides all the features of javascript with additional layers on top of it ( type checking , attribute hinting / suggestion /inferred types , hinting errors before they occure)
 - simple example of declaring a variable . In JS `const name = "arif"` , in TS `const name : string = "arif"`
 - primitive types are `string` `number` `boolean` . some advance types are Union (for custom types), Enume (for primitive types)
 - `any` is used to assign multiple types to a variable 
@@ -17,9 +17,9 @@
 Example :
 ```
 const numArray : number[] = [1,2,3] // or 
-const nums : Array<number> = [1,2,3] // bothe are almost same 
+const nums : Array<number> = [1,2,3] // both are almost same 
 ```
-- custom types can be declared with `type` or `interface` keyword  , TS can aslo figureout custom types from objects / datas structure 
+- custom types can be declared with `type` or `interface` keyword  , TS can also figures out custom types from objects / data structure 
 Example : 
 ```
 interface User {
@@ -39,7 +39,7 @@ type User {
 ```
 const ID = string | number 
 // header ID can be of type string or number
-// the type of ID can retrived with typeof operator 
+// the type of ID can retrieved with typeof operator 
 typeof ID 
 ```
 - enumes are declared as 
@@ -118,6 +118,98 @@ type ID = number | string ;
 # creating types form types 
 - in `Generic` type the type is dynamically taken as a parameter 
 // todo ...
+- generics allow to work on variety of types rather then a single one 
+- to understand generics we can look at identity function , an identity function is a type of 
+  function that returns what ever is passed to it (something like echo command )
+- without generic we can 
+    1. give the function a specific type 
+
+        ```
+        function identity(arg: number): number {
+            return arg;
+        }
+        ```
+    2. or use `any` type  
+
+        ```
+        function identity(arg: number): number {
+                return arg;
+        }
+        ```
+    but with `any` we will lose the information about what the type actually was when the function returns 
+- now with generic type 
+
+    ```
+    function identity<Type>(arg: Type): Type {
+        return arg;
+    }
+    ```
+
+    hear the type is also passed as an argument so it can be captured and returned 
+
+    ```
+    let output = identity<string>("myString");
+    <!-- let output : string ;   -->
+    ```
+    to pass array 
+
+    ```
+    function fn<T>(arg Array<T>) : number {
+        return arg.length 
+    }
+    ```
+- generic classes 
+    ```
+    class GenericNumber<NumType> {
+        zeroValue: NumType;
+        add: (x: NumType, y: NumType) => NumType;
+    }
+    
+    let myGenericNumber = new GenericNumber<number>();
+    myGenericNumber.zeroValue = 0;
+    myGenericNumber.add = function (x, y) {
+        return x + y;
+    };
+
+    ```
+ - __`constrains`__ can be applied to generic types 
+    
+    ```
+        function fn<T>(arg : T) : T {
+            console.log(arg.length) // ❌ will cause error in not length
+            return arg 
+        }
+        fn(3) // error
+    ```
+    so hear , a non existing property is being referenced 
+    with constrains we can make sure parameters contain certain properties / property 
+
+    ```
+        interface R {
+            length : number ;
+        }
+        function fn<T extends R >(arg : T) : T {
+            console.log(arg.length)
+            return arg 
+        }
+
+        fn(3) // will not accept ❌
+        fn({length : 3 , value : 'asd'}) // ✅
+
+    ```
+- type parameter in generic constrain 
+
+    ```
+        function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+            return obj[key];
+        }
+        
+        let x = { a: 1, b: 2, c: 3, d: 4 };
+        
+        getProperty(x, "a");
+        getProperty(x, "m");
+        // Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c" | "d"'.
+    ```
 # util types 
 there are many uitls but we will discuess only `Partial` ,`Readonly`, `Pick`, and `Omit` 
 lets say we have a type of Todo 
@@ -152,6 +244,25 @@ type ModTodo = Pick<Todo, 'title' | 'completed' > ;
 ```
 
 type ModTodo = Omit<Todo, 'createdAt' | 'title' > ;
+
+```
+
+and very useful `Extend` , type can be extended with unknown fields 
+
+```
+export type Extend<T extends { [key: string]: any }> = T & {
+  [key: string]: any;
+};
+
+type Person = Extend<{
+    name : string ;
+}>
+
+let boy : Person = {
+    name : 'Jack' ,
+    age : 21 ,
+    hobby : 'football'
+}
 
 ```
 
