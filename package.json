@@ -1,0 +1,24 @@
+{
+  "name": "daily-learn",
+  "version": "1.0.0",
+  "description": "- Node / JavaScript \r - Mongo\r - [mysql](/mysql.md)\r - design patterns , oop \r - algo ds (DSA) \r - git \r - linux \r - express / nest  \r - GO\r - AWS\r     - serverless \r         - serverless framework \r     - route53\r     - ec2 \r     - rds\r     - dynamo \r - kubernetes\r - terraform",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aistiak/daily-learn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aistiak/daily-learn/issues"
+  },
+  "homepage": "https://github.com/aistiak/daily-learn#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "loadtest": "^5.2.0"
+  }
+}
