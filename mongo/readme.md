@@ -237,7 +237,11 @@ db.movies.find(
 )
 ```
 
-### Query Array 
+## Array stuff 
+-
+- update 
+- search 
+### Query / search Array 
 
 the movies collection has a field named cast (type array) which contains list of the cast 
 now to find documents where  _Charles Chaplin_ is a cast 
@@ -257,7 +261,7 @@ db.movies.find({
 })
 ```
 
-##### search array with array 
+### search array with array 
 
 we can search array with array but in this case order will matter 
 
@@ -278,9 +282,9 @@ db.movies.find({
 
 ```
 
-##### $all operator 
-
-`$all` finds all the documents irrespective of the provided order or size
+### $all operator 
+- Matches arrays that contain all elements specified in the query.
+- `$all` finds all the documents irrespective of the provided order or size
 
 ```
  db.movies.find({
@@ -291,9 +295,94 @@ db.movies.find({
 
 ```
 
+### $elemMatch 
+- The $elemMatch operator matches documents that contain an array field with at least one element that matches all the specified query criteria.
+- assume a collection names scores 
+    ```
+    { _id: 1, results: [ 82, 85, 88 ] }
+    { _id: 2, results: [ 75, 88, 89 ] }   
+    ```
+- we can use elemMatch like this 
+    ```
+    db.scores.find(
+       { results: { $elemMatch: { $gte: 80, $lt: 85 } } }
+    )
+    ```
+- we can use find instead of elemMatch is there is only one condition to match 
+
+> we can also combine `$all` and `$elemMatch` , usually used in nested object arrays 
+
+- lets assume a collection named inventory 
+    ```
+        {
+            _id: ObjectId("5234cc89687ea597eabee675"),
+            code: "xyz",
+            tags: [ "school", "book", "bag", "headphone", "appliance" ],
+            qty: [
+                    { size: "S", num: 10, color: "blue" },
+                    { size: "M", num: 45, color: "blue" },
+                    { size: "L", num: 100, color: "green" }
+                 ]
+        }
+        {
+            _id: ObjectId("5234cc8a687ea597eabee676"),
+            code: "abc",
+            tags: [ "appliance", "school", "book" ],
+            qty: [
+                    { size: "6", num: 100, color: "green" },
+                    { size: "6", num: 50, color: "blue" },
+                    { size: "8", num: 100, color: "brown" }
+                 ]
+        }
+        {
+            _id: ObjectId("5234ccb7687ea597eabee677"),
+            code: "efg",
+            tags: [ "school", "book" ],
+            qty: [
+                    { size: "S", num: 10, color: "blue" },
+                    { size: "M", num: 100, color: "blue" },
+                    { size: "L", num: 100, color: "green" }
+                 ]
+        }
+        {
+            _id: ObjectId("52350353b2eff1353b349de9"),
+            code: "ijk",
+            tags: [ "electronics", "school" ],
+            qty: [
+                    { size: "M", num: 100, color: "green" }
+                 ]
+        }
+
+    ```
+- we want to find all the documents that matches `$elemMatch` conditions 
+
+    ```
+    db.inventory.find( {
+        qty: {
+                 $all: [
+
+                        { "$elemMatch" : { size: "M", num: { $gt: 50} } },
+                        { "$elemMatch" : { num : 100, color: "green" } }
+                 ] 
+             }
+    } )
+
+    ```
+### $size 
+- The $size operator matches any array with the number of elements specified by the argument 
+
+    ```
+    db.collection.find( { field: { $size: 2 } } );
+    ```
+
+## array update operators 
+// todo 
+- https://www.mongodb.com/docs/manual/reference/operator/update-array/ 
 #### nested object search 
 
-nested object can be search in two ways 1. by object format 2. Dot notation format 
+nested object can be search in two ways 
+1. by object format 
+2. Dot notation format 
 
 in object format the whole object has to match 
 
@@ -379,110 +468,6 @@ db.movies.find().sort({title : 1 , year : -1 })
 ```
 
 
-
-## Mongoose 
-Is a ODM ( Object Data Modeling ) library for mongodb . 
-- It lets us define schemas and work with models . Alongside properties schemas can also have behaviors  
-- manages relationship between data , provides schema validation 
-- translate object in to represent those object in mongodb 
-
-__database connection__
-
- first thing we need to do is ensure database connection
-```
-const mongoose = require("mongoose")
-
-async function connect () {
-    await mongoose.connect("mongodb://localhost:27017/election-db)
-}
-connect().catch( error => console.log(error))
-``` 
-__define model and schema__
-```
-// define schema 
-const UserSchema = new mongoose.Schema({
-    name : String ;
-})
-
-// define model 
-const User = mongoose.model("User",UserSchema) 
-
-// create a new user 
-const user = new User({name : "istiak"})
-await user.save()
-
-// find user 
-await User.find({name : /^istiak/ })
-```
-__schema validation__
-
-types provided by mongoose are 
-1. String
-2. Number
-3. Date
-4. Buffer
-5. Boolean
-6. Mixed
-7. ObjectId
-8. Array
-9. Decimal128
-10. Map
-11. Schema 
-
-validations are defined in schema types 
-
-```
-const UserSchema = new mongoose.Schema({
-    name : {
-        type : String ,
-        required : true 
-    }
-})
-```
-all schema types are 
-1. required (boolean)
-2. default (any of function)
-3. select (boolean, specifies default projection for queries )
-4. validate (function)
-5. get (function , defines custom getters)
-6. set (function , defines custom setters)
-7. alias (string, defines a alias with get/set (virtual) )
-8. immutable (boolean)
-9. transform (function,called when toJSON or JSON.stringify document )
-
-__middleware__
-middleware in mongoose are also known as pre and post hooks, they are passed control during execution of asyn functions 
-
-different types of middleware are 
-1. Document middleware 
-2. Model middleware 
-3. Aggregate middleware 
-4. Query middleware 
-
-__docs__  https://mongoosejs.com/docs/middleware.html
-
-__transaction__
-Transactions in mongodb allows us to execute multiple operations in isolation and undo potentially undo all if one of them fails 
-
-__ex__
-
-```
-import mongoose from 'mongoose'
-
-// using default connection
-const session = await mongoose.startSession() 
-
-await session.withTransaction(() =>{
-    // code hear 
-    // 
-})
-
-session.endSession() // all the changes will be committed 
-```
-
-__frequently used functions__
-
-`find` ,`findOne` ,`update`, `updateOne`, `delete`, `deleteOne` 
 
 ## Mongodb aggregation 
 __Ref__: https://docs.mongodb.com/manual/aggregation/

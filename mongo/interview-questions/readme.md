@@ -21,16 +21,7 @@ objectId is a 12-byte BJSON type , it has
 
 ### namespace in mongodb 
 It is the canonical name for a collection or index in MongoDB . The namespace is a combination of the database name  name collection name or index name 
-### what is sharding in mongoDB 
-Sharding is the method for distributing data across multiple machines . 
 
-MongoDB uses sharding to support deployments with very large data sets and highly throughput operations  
-
-sharding cluster has 3 components 
-- _shard_  each shard contains a subset of the sharded data each shard can be deployed as a replica set 
-- _mongos_ acts as a query router , providing a interface between client and the sharded cluster 
-
-- _config server_ Config servers stores metadata and configuration settings for the cluster 
 ### what is mongod 
 mongod is the primary demon process for the MongoDB system . It handles data request , manages data access and performs background management operations 
 
@@ -54,6 +45,16 @@ capped collections are fixed-sized collections that support hight-throughput ope
 
 - Usually, SECONDARY databases copy data changes directly from PRIMARY. Sometimes a SECONDARY database can replicate data from another SECONDARY. This type of replication is called Chained Replication because it is a two-step replication process. Chained replication is useful in certain replication topologies, and it is enabled by default in MongoDB.
 
+### what is sharding in mongoDB 
+Sharding is the method for distributing data across multiple machines . 
+
+MongoDB uses sharding to support deployments with very large data sets and highly throughput operations  
+
+sharding cluster has 3 components 
+- _shard_  each shard contains a subset of the sharded data each shard can be deployed as a replica set 
+- _mongos_ acts as a query router , providing a interface between client and the sharded cluster 
+
+- _config server_ Config servers stores metadata and configuration settings for the cluster 
 ### explain the process of sharding 
 
 Sharding is the process of splitting data up across machines. We also use the term “partitioning” sometimes to describe this concept. We can store more data and handle more load without requiring larger or more powerful machines, by putting a subset of data on each machine.
