@@ -377,6 +377,243 @@ db.movies.find({
 
 ## array update operators 
 // todo 
+there are 8 array update operators 
+
+1. `$` ( positional operator ) acts as a placeholder to update the first element that matches the query condition 
+    ```
+    // example - 1
+
+    { "_id" : 1, "grades" : [ 85, 80, 80 ] },
+    { "_id" : 2, "grades" : [ 88, 90, 92 ] },
+    { "_id" : 3, "grades" : [ 85, 100, 90 ] }
+
+    db.students.updateOne(
+        { _id: 1, grades: 80 },
+        { $set: { "grades.$" : 82 } }
+    )
+
+    { "_id" : 1, "grades" : [ 85, 82, 80 ] }
+    { "_id" : 2, "grades" : [ 88, 90, 92 ] }
+    { "_id" : 3, "grades" : [ 85, 100, 90 ] }
+
+    // example - 2
+    
+    {
+        _id: 4,
+        grades: [
+            { grade: 80, mean: 75, std: 8 },
+            { grade: 85, mean: 90, std: 5 },
+            { grade: 85, mean: 85, std: 8 }
+        ]
+    }
+
+    db.students.updateOne(
+        { _id: 4, "grades.grade": 85 },
+        { $set: { "grades.$.std" : 6 } }
+    )
+
+
+    ```
+
+
+2. `$[]` ( all positional operator ) same as `$` but updates all the elements matching the query condition 
+    ```
+    // example - 1
+
+    { "_id" : 1, "grades" : [ 85, 80, 80 ] },
+    { "_id" : 2, "grades" : [ 88, 90, 92 ] },
+    { "_id" : 3, "grades" : [ 85, 100, 90 ] }
+
+    db.students.updateOne(
+        { _id: 1, grades: 80 },
+        { $set: { "grades.$[]" : 82 } }
+    )
+
+    { "_id" : 1, "grades" : [ 85, 82, 82 ] }
+    { "_id" : 2, "grades" : [ 88, 90, 92 ] }
+    { "_id" : 3, "grades" : [ 85, 100, 90 ] }
+
+    ```
+
+        
+    if `upsert` is set to `true` it will result in an insert , if no matches found `upsert` will cause error 
+
+
+    ```
+    db.emptyCollection.updateOne(
+        { myArray: 5 },
+        { $set: { "myArray.$[]": 10 } },
+        { upsert: true }
+    )
+
+    ```
+3. `$[<identifier>]` ( filtered positional operator ) acts as a placeholder to update all elements that match the `arrayFilter` condition for document that match query condition , 
+
+
+    ```
+    db.students.insertMany( [
+        { "_id" : 1, "grades" : [ 95, 92, 90 ] },
+        { "_id" : 2, "grades" : [ 98, 100, 102 ] },
+        { "_id" : 3, "grades" : [ 95, 110, 100 ] }
+    ] )
+
+    db.students.updateMany(
+        { },
+        { $set: { "grades.$[element]" : 100 } },
+        { arrayFilters: [ { "element": { $gte: 100 } } ] }
+    )
+
+    { "_id" : 1, "grades" : [ 95, 92, 90 ] }
+    { "_id" : 2, "grades" : [ 98, 100, 100 ] }
+    { "_id" : 3, "grades" : [ 95, 100, 100 ] }
+
+    ```
+4. `$addToSet` adds element to an array if they already do not exist on the set 
+
+    ```
+    // ex - 1
+    db.pigments.updateOne(
+        { _id: 1 },
+        { $addToSet: { colors: "mauve" } }
+    )
+
+    // ex -2 ($each modifier can be used to add multiple values)
+    db.inventory.updateOne(
+        { _id: 2 },
+        { $addToSet: { tags: { $each: [ "camera", "electronics", "accessories" ] } } }
+    )
+    ```
+5. `$pop` removes the first or the last item of an arry 
+    
+    ```
+    // ex - 1
+    db.students.insertOne( { _id: 1, scores: [ 8, 9, 10 ] } ) 
+
+    db.students.updateOne( { _id: 1 }, { $pop: { scores: -1 } } )
+
+    { _id: 1, scores: [ 9, 10 ] }
+
+    // -1 for pop first 1 for pop last 
+
+    ```
+6. `$pull` removes all elements that match specific query 
+
+    ```
+    // ex - 1 
+    db.stores.insertMany( [
+        {
+            _id: 1,
+            fruits: [ "apples", "pears", "oranges", "grapes", "bananas" ],
+            vegetables: [ "carrots", "celery", "squash", "carrots" ]
+        },
+        {
+            _id: 2,
+            fruits: [ "plums", "kiwis", "oranges", "bananas", "apples" ],
+            vegetables: [ "broccoli", "zucchini", "carrots", "onions" ]
+        }
+    ] )
+
+    // the following operation removes appels and oranges from fruits and carrots from vegetables 
+
+    db.stores.updateMany(
+        {} ,
+        { $pull:{ fruits : {$in : ["apples","oranges]}    , vegetables : "carrots" }  }
+    )
+
+    ```
+7. `$push` adds an item to the array
+
+    ```
+    db.students.insertOne( { _id: 1, scores: [ 44, 78, 38, 80 ] } )
+
+    db.students.updateOne(
+        { _id: 1 },
+        { $push: { scores: 89 } }
+    )
+
+    { _id: 1, scores: [ 44, 78, 38, 80, 89 ] }
+
+
+    ```
+    
+    `$each` , `$slice` , `$sort` and `$position` modifiers can be used with `$push`
+
+    ```
+    db.students.insertOne(
+        {
+            "_id" : 5,
+            "quizzes" : [
+                { "wk": 1, "score" : 10 },
+                { "wk": 2, "score" : 8 },
+                { "wk": 3, "score" : 5 },
+                { "wk": 4, "score" : 6 }
+            ]
+        }
+    )
+
+    db.students.updateOne(
+        { _id: 5 },
+        {
+            $push: {
+            quizzes: {
+                // adds all these items
+                $each: [ { wk: 5, score: 8 }, { wk: 6, score: 7 }, { wk: 7, score: 6 } ], 
+                // sort in descending order by score 
+                $sort: { score: -1 },
+                // keeps only the first 3 items 
+                $slice: 3
+            }
+            }
+        }
+    )
+
+    {
+        "_id" : 5,
+        "quizzes" : [
+            { "wk" : 1, "score" : 10 },
+            { "wk" : 2, "score" : 8 },
+            { "wk" : 5, "score" : 8 }
+        ]
+    }
+    ```
+
+    The $position modifier specifies the location in the array at which the $push operator inserts elements.
+
+    ```
+    db.students.insertOne( { "_id" : 1, "scores" : [ 100 ] } )
+
+    db.students.updateOne(
+        { _id: 1 },
+        {
+            $push: {
+                scores: {
+                $each: [ 50, 60, 70 ],
+                $position: 0
+                }
+            }
+        }
+    )
+
+    { "_id" : 1, "scores" : [  50,  60,  70,  100 ] }
+
+    ```
+    position operator can take negative index to indicated positioning from end of the array 
+
+
+8. `$pullAll` removes all matching values from an array 
+    -  $pullAll removes elements that match the listed values.
+    - Unlike the $pull operator that removes elements by specifying a query
+    ```
+    db.survey.insertOne( { _id: 1, scores: [ 0, 2, 5, 5, 1, 0 ] } )
+
+    db.survey.updateOne( { _id: 1 }, { $pullAll: { scores: [ 0, 5 ] } } )
+    
+    { "_id" : 1, "scores" : [ 2, 1 ] }
+
+    ```
+
+
+
 - https://www.mongodb.com/docs/manual/reference/operator/update-array/ 
 #### nested object search 
 
