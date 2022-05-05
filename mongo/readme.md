@@ -722,11 +722,8 @@ https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/#std-lab
 
 _single purpose functions_  are `count` , `estimatedCount` , `distinct` 
 
-
-### todo 
-- insert , update 
-- array operations 
-- aggregation functions  
+### Ref 
+- https://www.youtube.com/watch?v=Kk6Er0c7srU
 
 
 #### interview questions 
