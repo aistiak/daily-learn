@@ -30,7 +30,8 @@
 - [mysql data types](#mysql-data-types)
 - [point in time recovery ](#point-in-time-recovery)
 - [mysql vs mariadb](#mysql-vs-mariadb)
-
+- Database Normalization 
+- What are DDL , DML , DQL 
 
 ## ACID property
 
