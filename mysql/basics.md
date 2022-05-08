@@ -1,0 +1,7 @@
+- pk fk indexing 
+- views 
+- wildcard 
+- table crude 
+- data types 
+- triggers 
+- functions and procedures 

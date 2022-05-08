@@ -22,17 +22,7 @@
 
 ### focusing on 
 
-#### top 5 
-
-- node / js / express 
-- database (mongo /sql)
-- algo / ds 
-- system design 
-- design patterns / testing  
-
-### top 10
-- git 
-- docker 
-- linux 
-- kubernetes 
-- aws 
+- node / js 
+- database ( mongo /sql )
+- algo / ds ( basics )
+- design pattern 

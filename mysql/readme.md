@@ -32,6 +32,14 @@
 - [mysql vs mariadb](#mysql-vs-mariadb)
 - Database Normalization 
 - What are DDL , DML , DQL 
+- Interview Questions 
+
+
+# prep process 
+- w3School basic documentations with example 
+- interview bit problem solve (time consuming)
+- ACID / procedure / stored function / master-salve etc structural/common stuff 
+- Interview Problems go through 
 
 ## ACID property
 
