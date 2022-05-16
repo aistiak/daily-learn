@@ -36,7 +36,7 @@ GROUP BY ShipperName;
 
 ### HAVING clause 
 
-he HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
 
 ```
 SELECT COUNT(CustomerID), Country

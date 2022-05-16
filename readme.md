@@ -24,5 +24,10 @@
 
 - node / js 
 - database ( mongo /sql )
-- algo / ds ( basics )
 - design pattern 
+- algo / ds ( basics )
+
+### others 
+- make a cv (necessary) 
+- start portfolio (good to have)
+- personal projects (good to have)
