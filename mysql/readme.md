@@ -2,7 +2,7 @@
 - wildcard 
 - pk fk indexing 
 - nested query
-- views 
+- [views](views.md)
 - table crude 
 - triggers 
 - functions and procedures 
