@@ -52,3 +52,16 @@ hear a nginx container is created if nginx image is not avaiable locally then it
 docker logs --follow nginx-local 
 ```
 this will log the logs inside the container and follow them 
+
+### create new container and enter in bash mode 
+
+```
+docker run -it alpine 
+```
+
+### enter a container in bash mode 
+
+```
+docker container <container-id> --exec bash
+```
+

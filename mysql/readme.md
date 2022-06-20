@@ -9,8 +9,8 @@
 - normalization 
 - order-by-group-by
 
-- joining
-- union 
+- [joining](joining.md)
+- [union](union.md) 
 - dml-ddl-dql
 -
 
