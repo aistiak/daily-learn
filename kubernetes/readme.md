@@ -28,7 +28,7 @@ __Deployment__ tells kubernetes how to create/modify instances of the pods that 
 
 __external services__ are services that open ways for external access like browser 
 
-__Ingress__ does forwarding . ingress can handles customer domain for application as default access urls are not very practical
+__Ingress__ does forwarding . ingress can handle custom domain for application as default access urls are not very practical
 
 __internal services__ only accessable inside kubernetes network 
 
