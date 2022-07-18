@@ -88,3 +88,4 @@ readable.on("end", () => {
 
 ## Refs
 - https://jscomplete.com/learn/node-beyond-basics/node-streams
+- https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/
