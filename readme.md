@@ -1,4 +1,18 @@
 # বেড়ে ওঠার ডোজ রোজ রোজ  :p 
+
+
+### this week 7/24/2022
+- nodejs crypto module 
+- nodejs fs module 
+- some other interesting modules that i can look into 
+    - events
+    - child_process
+    - dns
+    - net 
+    - path 
+    - zlib 
+
+
 ## topic to improve within april 2022 
 - Node / JavaScript 
 - Mongo
@@ -31,3 +45,4 @@
 - make a cv (necessary) 
 - start portfolio (good to have)
 - personal projects (good to have)
+

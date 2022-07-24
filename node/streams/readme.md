@@ -22,7 +22,7 @@
     - Transform (duplex stream used to modify data)
 
     ### `pipe` method 
-    - this is used to chaing /pipe output form one stream to another 
+    - this is used to chain /pipe output form one stream to another 
     ```
     ex : 1 
     readableSrc.pipe(writableDest);
@@ -51,7 +51,7 @@
 
 ### stream events 
 
-- Besides reading from a readable stream source and writing to a writable destination pipe method also autometically manages a few things along the was 
+- Besides reading from a readable stream source and writing to a writable destination pipe method also automatically manages a few things along the was 
 - for example it handles errors , end-of-file , and the case when one stream is slower or faster than the other
 
 - However streams can also be used with custom events 
