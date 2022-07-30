@@ -80,3 +80,8 @@ NB. are public and private keys interchangeable
     console.log(`Is signature verified: ${isVerified}`);
 
 ```
+
+
+### refs 
+- https://gist.github.com/Vitsaus/3798537
+- https://www.geeksforgeeks.org/node-js-crypto-verify-function/  

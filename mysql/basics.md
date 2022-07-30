@@ -44,6 +44,26 @@
 
 ## ACID property
 
+> a transaction is a single logical unit of work that can access and modify the contents of database 
+
+to maintain consistency in database before and after transaction certain properties are followed these properties are called acid properties 
+
+ACID stands for 
+- Atomicity 
+- Consistency 
+- Isolation 
+- Durability 
+
+
+_Atomicity_ the entire transaction happens once or doesn't happen at all 
+
+_Consistency_ the database must be consistent before and after transaction 
+ 
+_Isolation_ Multiple transaction occur without interference 
+
+_Durability_ Changes of successful transaction occur even if there is a system failure 
+
+> __Transaction-Log_ is a history of actions executed by a database management system used to guarantee ACID properties over crashes or hardware failures. Physically, a log is a file listing changes to the database, stored in a stable storage format
 
 ## indexing 
 
