@@ -63,8 +63,8 @@ _Isolation_ Multiple transaction occur without interference
 
 _Durability_ Changes of successful transaction occur even if there is a system failure 
 
-> __Transaction-Log_ is a history of actions executed by a database management system used to guarantee ACID properties over crashes or hardware failures. Physically, a log is a file listing changes to the database, stored in a stable storage format
-
+> __Transaction-Log__ is a history of actions executed by a database management system used to guarantee ACID properties over crashes or hardware failures. Physically, a log is a file listing changes to the database, stored in a stable storage format
+> Transaction work in parallel , if parallel transactions both having same inserts operation one will succeed other will get PK violation error  
 ## indexing 
 
 ### what is indexing ?
