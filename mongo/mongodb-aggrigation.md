@@ -106,6 +106,55 @@ db.userInfo.aggregate([
 ]).pretty();
 
 ```
+
+##### $lookup 
+this is a very useful stage when we are trying to combine multiple collections 
+
+example :
+we are trying to list all users who is not under a sumoling company , 
+but we dont have any indication / field in users to know if it is a sumo ling , we only have company id but in company collection we have a boolean filed `isSumoling` 
+
+the below pipeline filtes the sumoling users 
+```
+
+[{
+    $match: {}
+}, {
+    $lookup: {
+        from: 'companies',
+        localField: 'companyId',
+        foreignField: 'resourceId',
+        as: 'company'
+    }
+}, {
+    $match: {
+        'company.isSumoLing': {
+            $ne: true
+        }
+    }
+}, {
+    $sort: {
+        _id: -1
+    }
+}, {
+    $project: {
+        company: {
+            $first: '$company'
+        },
+        name: '$userFullname',
+        email: '$userEmail'
+    }
+}, {
+    $project: {
+        _id: 0,
+        name: '$name',
+        email: '$email',
+        plan: '$company.payment.plan',
+        status: '$company.payment.status'
+    }
+}]
+
+```
 #### list of aggregation pipeline stages 
 
 https://www.mongodb.com/docs/manual/reference/operator/aggregation-pipeline/

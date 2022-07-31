@@ -57,9 +57,9 @@ ACID stands for
 
 _Atomicity_ the entire transaction happens once or doesn't happen at all 
 
-_Consistency_ the database must be consistent before and after transaction 
+_Consistency_ the database must be consistent before and after transaction . Example : deducting from one account and adding money to another the total amount of money should be the same 
  
-_Isolation_ Multiple transaction occur without interference 
+_Isolation_ Multiple transaction occur without interference (making changes on the same resource will have a sequential order for example adding 500 and adding 200 to an account in separate transaction should wait for the first one to finish  [write lock ] or might cause race condition )
 
 _Durability_ Changes of successful transaction occur even if there is a system failure 
 
