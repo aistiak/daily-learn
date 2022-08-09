@@ -68,6 +68,7 @@ _BinInt_
 
 _String_
 - Unlike some programming languages (such as C), JavaScript strings are immutable. This means that once a string is created, it is not possible to modify it.
+![image](https://user-images.githubusercontent.com/30620860/183580593-eb1eb8f2-d461-4865-8a63-f3c65301a2f0.png)
 
 - However, it is still possible to create another string based on an operation on the original string . ex : `String.substr()` , or `String.substr()` or `+`
 
