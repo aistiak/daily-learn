@@ -29,6 +29,7 @@ Garbage collection of GC is a form of automatic memory management . Its purpose 
 
 - interlinked objects 
   ```
+  function marry(man,women)
       woman.husband = man;
       man.wife = woman;
 

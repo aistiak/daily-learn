@@ -5,6 +5,7 @@
   - state 
   - bridge 
   - adapter 
+  - builder 
   
 - feats. of OOP
 - feats. of Functional Programming 
