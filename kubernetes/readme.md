@@ -30,7 +30,7 @@ __external services__ are services that open ways for external access like brows
 
 __Ingress__ does forwarding . ingress can handle custom domain for application as default access urls are not very practical
 
-__internal services__ only accessable inside kubernetes network 
+__internal services__ only accessible inside kubernetes network 
 
 __config map__ ways to store configs externally in kubernetes 
 
@@ -38,7 +38,7 @@ __secret__ just like config map but for secret data , for example username and p
 
 __service__ is a static component that can work as a load balancer 
 
-> the smallest entity in kubernetes is a pod , but we dont interact with pods directly rather we use ___Deployment___ 
+> the smallest entity in kubernetes is a pod , but we don't interact with pods directly rather we use ___Deployment___ 
 
 > its not a good practice to write databases in Deployments , for database we should use a component called ___StatefulSet___ (working with stateful set is tedious ) 
 
@@ -56,6 +56,11 @@ types of volume are
 
 ### A sample kubernetes yml file 
  > kubectl // todo 
+ - it a command line tool 
+ - it is used to run command against kubernetes cluster 
 
 
 ### simple poc 
+
+## Refs 
+- https://kubernetes.io/docs/tutorials/kubernetes-basics/
