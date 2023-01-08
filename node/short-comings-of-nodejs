@@ -1,5 +1,5 @@
 
-## shortcomings of nodejs
+# shortcomings of nodejs
 
 - static file serving 
 - load balancing across multiple instances 
@@ -9,7 +9,7 @@
 > cloud write a blog on nodejs vulnerabilities 
 
 
-### static file serving 
+## static file serving 
 In terms of performance, conventional web servers like Apache/Nginx use as system call called sendfile(2), which copies the static resources from disk directly to the network card bypassing process memory(RAM), unlike this in node js u would use something like readFileStream to read the html file which loads it into the process memory first and then serves the file. Node will soon have access to this sendfile() call, which is still in testing, so soon enough there will be very little difference in terms of performance.So if you are planning to serve huge static files over and over, don't use node.
 
 Other thing is you can't get things like virtual hosts, automatic mime type detection, tons of other config options present in apache to work with node. So like Nicholas said, if you are programming a single page web app with lots of dynamic data, pushing capabilities etc. thats a good situation to use node in.
@@ -24,3 +24,9 @@ todo
 
 ### sharing ssl certificate among multiple services 
 todo 
+
+
+
+# refs 
+- https://www.quora.com/What-are-the-disadvantages-of-using-Node-js-for-handling-static-resources
+- https://blog.devgenius.io/serve-https-with-node-js-and-nginx-a758bd4be8a1 
