@@ -1,48 +1,17 @@
 # বেড়ে ওঠার ডোজ রোজ রোজ  :p 
 
 
-### this week 7/24/2022
-- nodejs crypto module 
-- nodejs fs module 
-- some other interesting modules that i can look into 
-    - events
-    - child_process
-    - dns
-    - net 
-    - path 
-    - zlib 
 
-
-## topic to improve within april 2022 
-- Node / JavaScript 
-- Mongo
-- [mysql](/mysql.md)
-- design patterns , oop 
-- algo ds (DSA) 
-- git 
-- linux 
-- express / nest  
-- GO
-- AWS
-    - serverless 
-        - serverless framework 
-    - route53
-    - ec2 
-    - rds
-    - dynamo 
-- kubernetes
-- terraform 
-
-
+## open source project ides 
+[] url shortner scaleable 
+[] custom web framework  
+[] tunneling software like ngrok                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 ### focusing on 
 
-- node / js 
-- database ( mongo /sql )
-- design pattern 
-- algo / ds ( basics )
+- rabbitmq / kafka / redis basics and nitty gritty stuff related to them ( may be write blogs on them)
 
-### others 
-- make a cv (necessary) 
-- start portfolio (good to have)
-- personal projects (good to have)
+## 
+- working of amqp 0-9-1 (https://www.rabbitmq.com/tutorials/amqp-concepts.html)
+- other supported protocols of rabbitmq an use cases 
+- rabbitmq vs apache-kafka (https://stackoverflow.com/questions/42151544/when-to-use-rabbitmq-over-kafka)
 
