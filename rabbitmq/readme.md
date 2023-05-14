@@ -58,3 +58,8 @@
 ### Delay Message 
 - https://blog.rabbitmq.com/posts/2015/04/scheduling-messages-with-rabbitmq
 - for delayed queue most of have to define exchange 
+
+
+## commands 
+
+docker run --name some-rabbit -p 5672:5672 -p 15672:15672 -d aistiak/delayed_rabbit

@@ -15,3 +15,7 @@
 - other supported protocols of rabbitmq an use cases 
 - rabbitmq vs apache-kafka (https://stackoverflow.com/questions/42151544/when-to-use-rabbitmq-over-kafka)
 
+## new things i can try 
+- golang 
+- ruby 
+- erlang 
