@@ -33,3 +33,8 @@ it is an optional feat. that allows us to capture data modification events in dy
 
 
 
+## dynamo single table design
+
+### framework 
+
+// work 7 days for algesoft can find it there 
